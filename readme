@@ -1,0 +1,20 @@
+#list all modules
+module avail
+# mpi* is one of {mpich/mpich-3.1,mpich/mpich-3.1-slurm,intel/impi-18,.....}
+module load mpi*
+
+mpicc -o cpi cpi.c
+
+#mpich-3.1-slurm
+srun -N 4 -n 4 -p gpu ./cpi
+
+#other mpi
+salloc -N 4 -n 4 -p gpu ./cpi
+
+#or batch
+sbatch -N 4 -n 4 -p gpu ./exec.sh
+
+#exec.sh as follows
+mpirun ${exec_path}/cpi
+
+
