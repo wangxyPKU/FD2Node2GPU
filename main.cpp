@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h> 
 
-#include "IniteDiff.h"
+#include "FiniteDiff.h"
 
 using namespace std;
 
