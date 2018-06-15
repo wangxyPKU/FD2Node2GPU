@@ -307,14 +307,15 @@ endif
 main.o:main.cpp
 	$(EXEC) $(MPICXX) $(INCLUDES) $(MPI_CCFLAGS) -o $@ -c $<
 
-cuda.o:IniteDiff.cu
+cuda.o:FiniteDiff.cu
 	$(EXEC) $(NVCC) $(INCLUDES) $(INCLUDES_MPI) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
 test: main.o cuda.o
 	$(EXEC) $(MPICXX) $(MPI_LDFLAGS) -o $@ $+ $(LIBRARIES)
 
 run: build
-	$(EXEC) ./test
+	#$(EXEC) ./test
+  srun -N 2 -n 2 --gres=gpu:1 ./test
 
 clean:
 	rm -f test main.o cuda.o
