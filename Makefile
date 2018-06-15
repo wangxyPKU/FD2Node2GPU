@@ -314,8 +314,7 @@ test: main.o cuda.o
 	$(EXEC) $(MPICXX) $(MPI_LDFLAGS) -o $@ $+ $(LIBRARIES)
 
 run: build
-	#$(EXEC) ./test
-  srun -N 2 -n 2 --gres=gpu:1 ./test
+	$(EXEC) ./test
 
 clean:
 	rm -f test main.o cuda.o
