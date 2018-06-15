@@ -1,16 +1,16 @@
 
-#include "cuda_runtime.h"
-#include "assert.h"
-#include "cuda.h"
+#include <cuda_runtime.h>
+#include <cuda.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
-//#include "/usr/local/mpich/include/mpi.h"
+#include <assert.h>
+
 #include <mpi.h>
 
-#include "IniteDiff.h"
+#include "FiniteDiff.h"
 
 using namespace std;
 
