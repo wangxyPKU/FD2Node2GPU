@@ -85,10 +85,10 @@ int main(int argc, char* argv[])
 	char processor_name[20];
 	unsigned int local_M,local_N,dataSizePerNode;
 
-	struct timeval start,end,start2,end2;
-	double timeuse,timeuse2,timeuse3,timeuse4;
+	struct timeval start,end;
+	double timeuse;
 
-	gettimeofday(&start2, NULL);
+	//gettimeofday(&start2, NULL);
 
 	int M,N;
 	if(argc==1){
@@ -119,11 +119,14 @@ int main(int argc, char* argv[])
 	GetDeviceName();
 
 	//initialize data by root node
+
 	dataSizeTotal=(M+2)*N;
 	float *fai_total=NULL;
 	if(my_rank==0){
+		cout<<"Initializing data..."<<endl;
 		fai_total = new float[dataSizeTotal];
 		DataInitial(fai_total, dataSizeTotal, M, N);
+		cout<<"Start calculating on GPUs..."<<endl;
 	}
 
 	gettimeofday(&start, NULL);
@@ -158,17 +161,18 @@ int main(int argc, char* argv[])
 				cout<<"Data is saved successfully!"<<endl;	
 		}
 	}
-	gettimeofday(&end2,NULL);
-	timeuse2=end2.tv_sec-start2.tv_sec + (end2.tv_usec-start2.tv_usec)/1e6;
-	timeuse3=end2.tv_sec-start.tv_sec + (end2.tv_usec-start.tv_usec)/1e6;
-	timeuse4=start.tv_sec-start2.tv_sec + (start.tv_usec-start2.tv_usec)/1e6;
+	//gettimeofday(&end2,NULL);
+	//timeuse2=end2.tv_sec-start2.tv_sec + (end2.tv_usec-start2.tv_usec)/1e6;
+	//timeuse3=end2.tv_sec-start.tv_sec + (end2.tv_usec-start.tv_usec)/1e6;
+	//timeuse4=start.tv_sec-start2.tv_sec + (start.tv_usec-start2.tv_usec)/1e6;
 
 	cout<<"Calculation time used of process "<<my_rank<<" running on "<<processor_name<<" is: "<<timeuse<<"s"<<endl;
-	if(my_rank==0){
+/*	if(my_rank==0){
 		cout<<"MPI initialization time is "<<timeuse4<<"s"<<endl;
 		cout<<"Total time except MPI intialization is "<<timeuse3<<"s"<<endl; 
 		cout<<"Total time is "<<timeuse2<<"s"<<endl;
 	}
+*/
 	MPI_Finalize();
 	return 0;
 }
